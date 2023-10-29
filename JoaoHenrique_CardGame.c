@@ -71,6 +71,7 @@ int main() {
 
     char maop1[7][20], maop2[7][20], cor[51][10], p1[99], p2[99], em_jogop1[20], em_jogop2[20];
     int i, case1, num_total, rodadas = 1, cartas_totais = 51, pontuacao_p1 = 0, pontuacao_p2 = 0, escolhap1, escolhap2, roxa = 0, preta = 0, vermelha = 0, amarela = 0;
+    int chamar_combate, combate_cont = 0, combatew_p1 = 0, combatew_p2 = 0, combate_totais = 0;
 
     bool carta_distribuida[51];
     for (i = 0; i < 51; i++) {
@@ -130,7 +131,172 @@ int main() {
 
     while (cartas_totais > 0 || numcartasp1 > 0 || numcartasp2 > 0){
 
+        int continuar = 0;
+        combate_cont = 0;
         printf("\nVez de %s", p1);
+        printf("\nCartas de %s:\n", p1);
+        for(i = 0; i < numcartasp1; i++){
+            if (maop1[i][2] == 'R' && maop1[i][0] != 'J' && maop1[i][0] != 'K' && maop1[i][0] != 'A' && maop1[i][0] != 'Q'){
+                printf("\n%d- R%s ", i + 1, maop1[i]);
+
+            }
+            else {
+                printf("\n%d- %s ", i + 1, maop1[i]);
+            }
+                
+        }
+
+        for(i = 0; i < numcartasp1; i++){
+            if(maop1[i][2] == 'P'){
+                combate_cont++;
+            }
+        }
+
+        if(combate_cont > 0){
+            printf("\nVoce tem %d opcoes de combate nas cartas ", combate_cont);
+            for(i = 0; i < numcartasp1; i++){
+                if(maop1[i][2] == 'P'){
+                    printf("%d ", i + 1);
+                }   
+            }
+
+            printf("\nDeseja chamar um combate? Digite 1 se sim, diferente de 1 se nao: ");
+            scanf("%d", &chamar_combate);
+
+            if(chamar_combate == 1){
+
+                printf("\nInforme qual carta sera utilizada para chamar o combate (preta): ");
+
+                scanf("%d", &escolhap1);
+
+                switch (escolhap1) {
+                        case 1:
+                            strcpy(em_jogop1, maop1[0]);
+                            break;
+                        case 2:
+                            strcpy(em_jogop1, maop1[1]);
+                            break;
+                        case 3:
+                            strcpy(em_jogop1, maop1[2]);                        
+                            break;
+                        case 4:
+                            strcpy(em_jogop1, maop1[3]);
+                            break;
+                        case 5:                                
+                            strcpy(em_jogop1, maop1[4]);
+                            break;
+                        case 6:
+                            strcpy(em_jogop1, maop1[5]);
+                            break;
+                        case 7: 
+                            strcpy(em_jogop1, maop1[6]);
+                            break;
+                }
+
+                while (em_jogop1[2] != 'P') {
+
+                    printf("\nCarta invalida, digite novamente: ");
+                    scanf("%d", &escolhap1);
+
+                    switch (escolhap1) {
+                        case 1:
+                            strcpy(em_jogop1, maop1[0]);
+                            break;
+                        case 2:
+                            strcpy(em_jogop1, maop1[1]);
+                            break;
+                        case 3:
+                            strcpy(em_jogop1, maop1[2]);                        
+                            break;
+                        case 4:
+                            strcpy(em_jogop1, maop1[3]);
+                            break;
+                        case 5:                                
+                            strcpy(em_jogop1, maop1[4]);
+                            break;
+                        case 6:
+                            strcpy(em_jogop1, maop1[5]);
+                            break;
+                        case 7: 
+                            strcpy(em_jogop1, maop1[6]);
+                            break;
+                    }
+
+                }
+
+                int valorp1 = atribui_valor(em_jogop1);
+
+                for (i = escolhap1 - 1; i < numcartasp1 - 1; i++) {
+                    strcpy(maop1[i], maop1[i + 1]);
+                }
+
+                numcartasp1--;
+
+                printf("\nResposta ao combate %s", p2);
+                printf("\nCartas de %s\n", p2);
+
+                for(i = 0; i < numcartasp2; i++){
+                    printf("\n%d- %s ", i + 1, maop2[i]);
+                }
+
+                if(numcartasp2 > 0){
+
+                    printf("\n\nInforme uma carta para responder o combate: ");
+                    scanf("%d", &escolhap2);
+
+                    switch (escolhap2) {
+                        case 1:
+                            strcpy(em_jogop2, maop2[0]);
+                            break;
+                        case 2:                    
+                            strcpy(em_jogop2, maop2[1]);
+                            break;
+                        case 3:
+                            strcpy(em_jogop2, maop2[2]);                        
+                            break;
+                        case 4:
+                            strcpy(em_jogop2, maop2[3]);
+                            break;
+                        case 5:
+                            strcpy(em_jogop2, maop2[4]);
+                            break;
+                        case 6:
+                            strcpy(em_jogop2, maop2[5]);
+                            break;
+                        case 7: 
+                            strcpy(em_jogop2, maop2[6]);
+                            break;
+                    }
+
+                    int valorp2 = atribui_valor(em_jogop2);
+
+                    for (i = escolhap2 - 1; i < numcartasp2 - 1; i++) {
+                        strcpy(maop2[i], maop2[i + 1]);
+                    }
+
+                    numcartasp2--; 
+
+                    if (em_jogop2[2] == em_jogop1[2] && valorp2 > valorp1){
+                        printf("\nJogador %s ganhou o combate!", p2);
+                        pontuacao_p2 += 3;
+                        combatew_p2++;
+                        combate_totais++;
+                    }
+                    else if (em_jogop2[2] == em_jogop1[2] && valorp2 == valorp1){
+                        printf("\nEmpate no combate!");
+                        combate_totais++;
+                    }
+                    else {
+                        printf("\nJogador %s ganhou o combate!", p1);
+                        combate_totais++;
+                    }
+                }
+            } else {
+                printf("Pressione 1 para continuar: ");
+                scanf("%d", &continuar);
+            }
+        }
+        printf("\n> Fim do combate/combate negado/sem opcao de combate\n");
         printf("\nCartas de %s:\n", p1);
         for(i = 0; i < numcartasp1; i++){
             if (maop1[i][2] == 'R' && maop1[i][0] != 'J' && maop1[i][0] != 'K' && maop1[i][0] != 'A' && maop1[i][0] != 'Q'){
@@ -145,7 +311,7 @@ int main() {
 
         if(numcartasp1 > 0){
 
-            printf("\n\nQual carta deseja jogar? Digite o numero: ");
+            printf("\nQual carta deseja jogar? Digite o numero: ");
             scanf("%d", &escolhap1);
            
             switch (escolhap1) {
@@ -172,6 +338,8 @@ int main() {
                     break;
             }
 
+            
+
         }
 
         if(em_jogop1[2] == 'V'){
@@ -196,7 +364,7 @@ int main() {
         }
         numcartasp1--;
 
-        int continuar = 0;
+        
 
         printf("\nPressione 1 para continuar: ");
         scanf("%d", &continuar);  
@@ -204,8 +372,178 @@ int main() {
         printf("\nVez de %s", p2);
         printf("\nCartas de %s\n", p2);
 
+        combate_cont = 0;
+
         for(i = 0; i < numcartasp2; i++){
             printf("\n%d- %s ", i + 1, maop2[i]);
+        }
+
+        for(i = 0; i < numcartasp1; i++){
+            if(maop2[i][2] == 'P'){
+                combate_cont++;
+            }
+        }
+
+        if(combate_cont > 0){
+            printf("\nVoce tem %d opcoes de combate nas cartas ", combate_cont);
+            for(i = 0; i < numcartasp2; i++){
+                if(maop2[i][2] == 'P'){
+                    printf("%d ", i + 1);
+                }   
+            }
+
+            chamar_combate = 0;
+
+            printf("\nDeseja chamar um combate? Digite 1 se sim, diferente de 1 se nao: ");
+            scanf("%d", &chamar_combate);
+
+            if(chamar_combate == 1){
+
+                printf("\nInforme qual carta sera utilizada para chamar o combate (preta): ");
+
+                scanf("%d", &escolhap2);
+
+                switch (escolhap2) {
+                        case 1:
+                            strcpy(em_jogop2, maop2[0]);
+                            break;
+                        case 2:
+                            strcpy(em_jogop2, maop2[1]);
+                            break;
+                        case 3:
+                            strcpy(em_jogop2, maop2[2]);                        
+                            break;
+                        case 4:
+                            strcpy(em_jogop2, maop2[3]);
+                            break;
+                        case 5:                                
+                            strcpy(em_jogop2, maop2[4]);
+                            break;
+                        case 6:
+                            strcpy(em_jogop2, maop2[5]);
+                            break;
+                        case 7: 
+                            strcpy(em_jogop2, maop2[6]);
+                            break;
+                }
+
+                while (em_jogop2[2] != 'P') {
+
+                    printf("\nCarta invalida, digite novamente: ");
+                    scanf("%d", &escolhap2);
+
+                    switch (escolhap2) {
+                        case 1:
+                            strcpy(em_jogop2, maop2[0]);
+                            break;
+                        case 2:
+                            strcpy(em_jogop2, maop2[1]);
+                            break;
+                        case 3:
+                            strcpy(em_jogop2, maop2[2]);                        
+                            break;
+                        case 4:
+                            strcpy(em_jogop2, maop2[3]);
+                            break;
+                        case 5:                                
+                            strcpy(em_jogop2, maop2[4]);
+                            break;
+                        case 6:
+                            strcpy(em_jogop2, maop2[5]);
+                            break;
+                        case 7: 
+                            strcpy(em_jogop2, maop2[6]);
+                            break;
+                }
+
+                }
+
+                int valorp2 = atribui_valor(em_jogop2);
+
+                for (i = escolhap2 - 1; i < numcartasp2 - 1; i++) {
+                    strcpy(maop2[i], maop2[i + 1]);
+                }
+
+                numcartasp2--;
+
+                printf("\nResposta ao combate %s", p1);
+                printf("\nCartas de %s\n", p1);
+
+                for(i = 0; i < numcartasp1; i++){
+                    printf("\n%d- %s ", i + 1, maop1[i]);
+                }
+
+                if(numcartasp1 > 0){
+
+                    printf("\n\nInforme uma carta para responder o combate: ");
+                    scanf("%d", &escolhap1);
+
+                    switch (escolhap1) {
+                        case 1:
+                            strcpy(em_jogop1, maop1[0]);
+                            break;
+                        case 2:                    
+                            strcpy(em_jogop1, maop1[1]);
+                            break;
+                        case 3:
+                            strcpy(em_jogop1, maop1[2]);                        
+                            break;
+                        case 4:
+                            strcpy(em_jogop1, maop1[3]);
+                            break;
+                        case 5:
+                            strcpy(em_jogop1, maop1[4]);
+                            break;
+                        case 6:
+                            strcpy(em_jogop1, maop1[5]);
+                            break;
+                        case 7: 
+                            strcpy(em_jogop1, maop1[6]);
+                            break;
+                    }
+
+                    int valorp1 = atribui_valor(em_jogop1);
+
+                    for (i = escolhap1 - 1; i < numcartasp1 - 1; i++) {
+                        strcpy(maop1[i], maop1[i + 1]);
+                    }
+
+                    numcartasp1--; 
+
+                    if (em_jogop1[2] == em_jogop2[2] && valorp1 > valorp2){
+                        printf("\nJogador %s ganhou o combate!", p1);
+                        pontuacao_p1 += 3;
+                        combatew_p1++;
+                        combate_totais++;
+                    }
+
+                    else if (em_jogop1[2] == em_jogop2[2] && valorp2 == valorp1){
+                        printf("\nEmpate no combate!");
+                        combate_totais++;
+                    }
+                    
+                    else {
+                        printf("\nJogador %s ganhou o combate!", p2);
+                        combate_totais++;
+                    }
+                }
+            } else {
+                printf("Pressione 1 para continuar: ");
+                scanf("%d", &continuar);
+            }
+        }
+
+        printf("\n> Fim do combate/combate negado/sem opcao de combate\n");
+        printf("\nCartas de %s:\n", p2);
+        for(i = 0; i < numcartasp2; i++){
+            if (maop2[i][2] == 'R' && maop2[i][0] != 'J' && maop2[i][0] != 'K' && maop2[i][0] != 'A' && maop2[i][0] != 'Q'){
+                printf("\n%d- R%s ", i + 1, maop2[i]);
+
+            }
+            else {
+                printf("\n%d- %s ", i + 1, maop2[i]);
+            }
+                
         }
 
         if(numcartasp2 > 0){
@@ -314,15 +652,18 @@ int main() {
 
 
         printf("\nFim da rodada %d\n", rodadas);
-        printf("\nPontuacao %s: %d \n", p1, pontuacao_p1);
-        printf("\nPontuacao %s: %d \n", p2, pontuacao_p2);
-        printf("\nCartas restantes no baralho principal: %d\n", cartas_totais);
         printf("\nPressione 1 para continuar: ");
         scanf("%d", &continuar);
         rodadas++;
 
     
     }
+
+    printf("\n> FIM DE JOGO\n");
+    printf("Total de rodadas: %d", rodadas);
+    printf("\nPontuacao %s: %d \n", p1, pontuacao_p1);
+    printf("\nPontuacao %s: %d \n", p2, pontuacao_p2);
+
 
     if(pontuacao_p1 > pontuacao_p2){
         printf("\nResultado final: %s ganhou! Parabens!", p1);
