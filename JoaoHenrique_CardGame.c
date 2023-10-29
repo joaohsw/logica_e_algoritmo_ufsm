@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 void distribuir_carta(char *mao, char *deck, char cor[51][10], int *cartas_totais, bool *carta_distribuida) {
+    
     int num_total;
 
     do {
@@ -21,8 +22,6 @@ void distribuir_carta(char *mao, char *deck, char cor[51][10], int *cartas_totai
 
     (*cartas_totais)--;
 }
-
-
 
 int atribui_valor(char carta[20]) {
 
@@ -57,8 +56,6 @@ int atribui_valor(char carta[20]) {
     return valor;
 }
 
-
-
 int main() {
 
     time_t seed;
@@ -71,13 +68,12 @@ int main() {
 
     char maop1[7][20], maop2[7][20], cor[51][10], p1[99], p2[99], em_jogop1[20], em_jogop2[20];
     int i, case1, num_total, rodadas = 1, cartas_totais = 51, pontuacao_p1 = 0, pontuacao_p2 = 0, escolhap1, escolhap2, roxa = 0, preta = 0, vermelha = 0, amarela = 0;
-    int chamar_combate, combate_cont = 0, combatew_p1 = 0, combatew_p2 = 0, combate_totais = 0;
+    int chamar_combate, combate_cont = 0, combatew_p1 = 0, combatew_p2 = 0, combate_totais = 0, opcombate = 0;
 
     bool carta_distribuida[51];
     for (i = 0; i < 51; i++) {
         carta_distribuida[i] = false;
     }
-
 
     for (i = 0; i < 14; i++) {
         strcpy(cor[i], "Roxa");
@@ -96,6 +92,7 @@ int main() {
     do {
 
         printf("> Card Game - dumb play\n");
+        printf("(Leia atentamente as orientacoes do jogo)\n");
         printf("Bem vindo! Digite 1 para comecar: ");
         scanf("%d", &case1);
 
@@ -149,6 +146,7 @@ int main() {
         for(i = 0; i < numcartasp1; i++){
             if(maop1[i][2] == 'P'){
                 combate_cont++;
+                opcombate++;
             }
         }
 
@@ -232,7 +230,7 @@ int main() {
 
                 numcartasp1--;
 
-                printf("\nResposta ao combate %s", p2);
+                printf("\n> Combate");
                 printf("\nCartas de %s\n", p2);
 
                 for(i = 0; i < numcartasp2; i++){
@@ -277,9 +275,8 @@ int main() {
                     numcartasp2--; 
 
                     if (em_jogop2[2] == em_jogop1[2] && valorp2 > valorp1){
-                        printf("\nJogador %s ganhou o combate!", p2);
-                        pontuacao_p2 += 3;
-                        combatew_p2++;
+                        printf("\n%s ganhou o combate!", p2);
+                        combatew_p2 += 1;
                         combate_totais++;
                     }
                     else if (em_jogop2[2] == em_jogop1[2] && valorp2 == valorp1){
@@ -287,8 +284,9 @@ int main() {
                         combate_totais++;
                     }
                     else {
-                        printf("\nJogador %s ganhou o combate!", p1);
+                        printf("\n%s ganhou o combate!", p1);
                         combate_totais++;
+                        combatew_p1 += 1;
                     }
                 }
             } else {
@@ -296,6 +294,7 @@ int main() {
                 scanf("%d", &continuar);
             }
         }
+
         printf("\n> Fim do combate/combate negado/sem opcao de combate\n");
         printf("\nCartas de %s:\n", p1);
         for(i = 0; i < numcartasp1; i++){
@@ -364,8 +363,6 @@ int main() {
         }
         numcartasp1--;
 
-        
-
         printf("\nPressione 1 para continuar: ");
         scanf("%d", &continuar);  
             
@@ -381,6 +378,7 @@ int main() {
         for(i = 0; i < numcartasp1; i++){
             if(maop2[i][2] == 'P'){
                 combate_cont++;
+                opcombate++;
             }
         }
 
@@ -466,7 +464,7 @@ int main() {
 
                 numcartasp2--;
 
-                printf("\nResposta ao combate %s", p1);
+                printf("\n> Combate");
                 printf("\nCartas de %s\n", p1);
 
                 for(i = 0; i < numcartasp1; i++){
@@ -508,12 +506,21 @@ int main() {
                         strcpy(maop1[i], maop1[i + 1]);
                     }
 
-                    numcartasp1--; 
+                    numcartasp1--; // nao consegui implementar a mecanica de jogar mais de uma carta no combate sem quebrar outras partes do jogo
 
-                    if (em_jogop1[2] == em_jogop2[2] && valorp1 > valorp2){
-                        printf("\nJogador %s ganhou o combate!", p1);
-                        pontuacao_p1 += 3;
-                        combatew_p1++;
+                    if (valorp1 == 10 && valorp2 == 12){ // castelo que é a carta de maior valor perde apenas para o rei
+                        combatew_p1 += 1;
+                        combate_totais++;
+                    }
+
+                    else if (valorp2 == 10 && valorp1 == 12){
+                        combatew_p2 += 1;
+                        combate_totais++;
+                    } 
+
+                    else if (em_jogop1[2] == em_jogop2[2] && valorp1 > valorp2){
+                        printf("\n%s ganhou o combate!", p1);
+                        combatew_p1 += 1;
                         combate_totais++;
                     }
 
@@ -523,8 +530,9 @@ int main() {
                     }
                     
                     else {
-                        printf("\nJogador %s ganhou o combate!", p2);
+                        printf("\n%s ganhou o combate!", p2);
                         combate_totais++;
+                        combatew_p2 += 1;
                     }
                 }
             } else {
@@ -577,7 +585,6 @@ int main() {
 
         }
 
-
         if(em_jogop2[2] == 'V'){
             vermelha++;
         }
@@ -590,7 +597,6 @@ int main() {
         else if(em_jogop2[2] == 'A'){
             amarela++;
         }
-
 
         int valorp2 = atribui_valor(em_jogop2);
 
@@ -611,7 +617,6 @@ int main() {
         else {
             printf("\nEmpate na rodada!\n");
         }
-        
 
         if (vermelha > 0 && cartas_totais > 0) {
             int falta_cartas_p1 = 7 - numcartasp1;
@@ -649,21 +654,22 @@ int main() {
                 }
             }
         }
-
-
+        
         printf("\nFim da rodada %d\n", rodadas);
+        printf("Combates vencidos por %s: %d", p1, combatew_p1);
+        printf("Combates vencidos por %s: %d", p2, combatew_p2);
         printf("\nPressione 1 para continuar: ");
         scanf("%d", &continuar);
         rodadas++;
 
-    
     }
 
     printf("\n> FIM DE JOGO\n");
-    printf("Total de rodadas: %d", rodadas);
-    printf("\nPontuacao %s: %d \n", p1, pontuacao_p1);
-    printf("\nPontuacao %s: %d \n", p2, pontuacao_p2);
-
+    printf("\nTotal de rodadas: %d", rodadas);
+    printf("\nCombates vencidos por %s: %d", p1, combatew_p1);
+    printf("\nCombates vencidos por %s: %d", p2, combatew_p2);
+    printf("\nPontuacao %s: %d", p1, pontuacao_p1 + (combatew_p1 * 3));
+    printf("\nPontuacao %s: %d", p2, pontuacao_p2 + + (combatew_p2 * 3));
 
     if(pontuacao_p1 > pontuacao_p2){
         printf("\nResultado final: %s ganhou! Parabens!", p1);
