@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-void distribuir_carta(char *mao, char *deck, char cor[51][10], int *cartas_totais, bool *carta_distribuida) {
+void distribuir_carta(char *mao, char *deck, char cor[51][10], int *cartas_totais, bool *carta_distribuida) { // seleciona uma carta aleatoria do baralho
     
     int num_total;
 
@@ -23,7 +23,7 @@ void distribuir_carta(char *mao, char *deck, char cor[51][10], int *cartas_totai
     (*cartas_totais)--;
 }
 
-int atribui_valor(char carta[20]) {
+int atribui_valor(char carta[20]) { // atribui valor para as strings para decidir quem ganhou
 
     int valor = 0;
 
@@ -56,7 +56,7 @@ int atribui_valor(char carta[20]) {
     return valor;
 }
 
-int main() {
+int main() { // deveria ter sido + modularizado o codigo, achei que seria + simples acabei fazendo tudo na main e nao consegui separar depois 
 
     time_t seed;
     srand((unsigned) time(&seed));
@@ -102,7 +102,6 @@ int main() {
     scanf("%s", p1);
     printf("\nEscolha um apelido para o player 2: ");
     scanf("%s", p2);
-
     printf("\n");
     printf("\nOk, vamos comecar. Distribuindo as cartas (7) para %s:\n", p1);
 
@@ -118,7 +117,6 @@ int main() {
     }
 
     printf("\n");
-    
     printf("\nRodada: %d", rodadas);
 
     int numcartasp1 = 7; 
@@ -126,7 +124,7 @@ int main() {
     int compra_vermelha_p1 = 0;
     int compra_vermelha_p2 = 0;
 
-    while (cartas_totais > 0 || numcartasp1 > 0 || numcartasp2 > 0){
+    while (cartas_totais > 0 || numcartasp1 > 0 || numcartasp2 > 0){ // loop do jogo
 
         int continuar = 0;
         combate_cont = 0;
@@ -151,20 +149,19 @@ int main() {
         }
 
         if(combate_cont > 0){
-            printf("\nVoce tem %d opcoes de combate nas cartas ", combate_cont);
+            printf("\nVoce tem %d opcoes de combate nas cartas de posicao ", combate_cont);
             for(i = 0; i < numcartasp1; i++){
                 if(maop1[i][2] == 'P'){
-                    printf("%d ", i + 1);
+                    printf("(%d) ", i + 1);
                 }   
             }
 
-            printf("\nDeseja chamar um combate? Digite 1 se sim, diferente de 1 se nao: ");
+            printf("\nDeseja chamar um combate? Digite 1 se sim, <> 1 se nao: ");
             scanf("%d", &chamar_combate);
 
             if(chamar_combate == 1){
 
                 printf("\nInforme qual carta sera utilizada para chamar o combate (preta): ");
-
                 scanf("%d", &escolhap1);
 
                 switch (escolhap1) {
@@ -266,6 +263,36 @@ int main() {
                             break;
                     }
 
+                    while(escolhap2 > numcartasp2 || escolhap2 < 1){
+
+                        printf("\n\nPosicao invalida, digite novamente: ");
+                        scanf("%d", &escolhap2);
+
+                        switch (escolhap2) {
+                            case 1:
+                                strcpy(em_jogop2, maop2[0]);
+                                break;
+                            case 2:                    
+                                strcpy(em_jogop2, maop2[1]);
+                                break;
+                            case 3:
+                                strcpy(em_jogop2, maop2[2]);                        
+                                break;
+                            case 4:
+                                strcpy(em_jogop2, maop2[3]);
+                                break;
+                            case 5:
+                                strcpy(em_jogop2, maop2[4]);
+                                break;
+                            case 6:
+                                strcpy(em_jogop2, maop2[5]);
+                                break;
+                            case 7: 
+                                strcpy(em_jogop2, maop2[6]);
+                                break;
+                        }
+                    }
+
                     int valorp2 = atribui_valor(em_jogop2);
 
                     for (i = escolhap2 - 1; i < numcartasp2 - 1; i++) {
@@ -297,20 +324,19 @@ int main() {
 
         printf("\n> Fim do combate/combate negado/sem opcao de combate\n");
         printf("\nCartas de %s:\n", p1);
+
         for(i = 0; i < numcartasp1; i++){
             if (maop1[i][2] == 'R' && maop1[i][0] != 'J' && maop1[i][0] != 'K' && maop1[i][0] != 'A' && maop1[i][0] != 'Q'){
                 printf("\n%d- R%s ", i + 1, maop1[i]);
-
             }
             else {
                 printf("\n%d- %s ", i + 1, maop1[i]);
             }
-                
         }
 
         if(numcartasp1 > 0){
 
-            printf("\nQual carta deseja jogar? Digite o numero: ");
+            printf("\nQual carta deseja jogar? Digite a posicao (1 - 7): ");
             scanf("%d", &escolhap1);
            
             switch (escolhap1) {
@@ -337,8 +363,35 @@ int main() {
                     break;
             }
 
-            
+            while (escolhap1 > numcartasp1 || escolhap1 < 1){
 
+                printf("\nPosicao invalida. Digite novamente: ");
+                scanf("%d", &escolhap1);
+           
+                switch (escolhap1) {
+                    case 1:
+                        strcpy(em_jogop1, maop1[0]);
+                        break;
+                    case 2:
+                        strcpy(em_jogop1, maop1[1]);
+                        break;
+                    case 3:
+                        strcpy(em_jogop1, maop1[2]);                        
+                        break;
+                    case 4:
+                        strcpy(em_jogop1, maop1[3]);
+                        break;
+                    case 5:
+                        strcpy(em_jogop1, maop1[4]);
+                        break;
+                    case 6:
+                        strcpy(em_jogop1, maop1[5]);
+                        break;
+                    case 7: 
+                        strcpy(em_jogop1, maop1[6]);
+                        break;
+                }
+            } 
         }
 
         if(em_jogop1[2] == 'V'){
@@ -365,7 +418,6 @@ int main() {
 
         printf("\nPressione 1 para continuar: ");
         scanf("%d", &continuar);  
-            
         printf("\nVez de %s", p2);
         printf("\nCartas de %s\n", p2);
 
@@ -383,22 +435,21 @@ int main() {
         }
 
         if(combate_cont > 0){
-            printf("\nVoce tem %d opcoes de combate nas cartas ", combate_cont);
+            printf("\nVoce tem %d opcoes de combate nas cartas de posicao ", combate_cont);
             for(i = 0; i < numcartasp2; i++){
                 if(maop2[i][2] == 'P'){
-                    printf("%d ", i + 1);
+                    printf("(%d) ", i + 1);
                 }   
             }
 
             chamar_combate = 0;
 
-            printf("\nDeseja chamar um combate? Digite 1 se sim, diferente de 1 se nao: ");
+            printf("\nDeseja chamar um combate? Digite 1 se sim, <> 1 se nao: ");
             scanf("%d", &chamar_combate);
 
             if(chamar_combate == 1){
 
                 printf("\nInforme qual carta sera utilizada para chamar o combate (preta): ");
-
                 scanf("%d", &escolhap2);
 
                 switch (escolhap2) {
@@ -452,8 +503,7 @@ int main() {
                         case 7: 
                             strcpy(em_jogop2, maop2[6]);
                             break;
-                }
-
+                        }
                 }
 
                 int valorp2 = atribui_valor(em_jogop2);
@@ -500,6 +550,36 @@ int main() {
                             break;
                     }
 
+                    while (escolhap1 > numcartasp1 || escolhap1 < 1){
+
+                        printf("\nPosicao invalida. Digite novamente: ");
+                        scanf("%d", &escolhap1);
+
+                        switch (escolhap1) {
+                        case 1:
+                            strcpy(em_jogop1, maop1[0]);
+                            break;
+                        case 2:                    
+                            strcpy(em_jogop1, maop1[1]);
+                            break;
+                        case 3:
+                            strcpy(em_jogop1, maop1[2]);                        
+                            break;
+                        case 4:
+                            strcpy(em_jogop1, maop1[3]);
+                            break;
+                        case 5:
+                            strcpy(em_jogop1, maop1[4]);
+                            break;
+                        case 6:
+                            strcpy(em_jogop1, maop1[5]);
+                            break;
+                        case 7: 
+                            strcpy(em_jogop1, maop1[6]);
+                            break;
+                        }
+                    }
+
                     int valorp1 = atribui_valor(em_jogop1);
 
                     for (i = escolhap1 - 1; i < numcartasp1 - 1; i++) {
@@ -508,7 +588,7 @@ int main() {
 
                     numcartasp1--; // nao consegui implementar a mecanica de jogar mais de uma carta no combate sem quebrar outras partes do jogo
 
-                    if (valorp1 == 10 && valorp2 == 12){ // castelo que é a carta de maior valor perde apenas para o rei
+                    if (valorp1 == 10 && valorp2 == 12){ // castelo que é a carta de maior valor perde apenas para o rei (independente do naipe)
                         combatew_p1 += 1;
                         combate_totais++;
                     }
@@ -543,20 +623,19 @@ int main() {
 
         printf("\n> Fim do combate/combate negado/sem opcao de combate\n");
         printf("\nCartas de %s:\n", p2);
+
         for(i = 0; i < numcartasp2; i++){
             if (maop2[i][2] == 'R' && maop2[i][0] != 'J' && maop2[i][0] != 'K' && maop2[i][0] != 'A' && maop2[i][0] != 'Q'){
                 printf("\n%d- R%s ", i + 1, maop2[i]);
-
             }
             else {
                 printf("\n%d- %s ", i + 1, maop2[i]);
             }
-                
         }
 
         if(numcartasp2 > 0){
 
-            printf("\n\nQual carta deseja jogar? Digite o numero: ");
+            printf("\n\nQual carta deseja jogar? Digite a posicao (1 - 7): ");
             scanf("%d", &escolhap2);
 
             switch (escolhap2) {
@@ -583,6 +662,36 @@ int main() {
                     break;
             }
 
+            while (escolhap2 > numcartasp2 || escolhap2 < 1){
+
+                printf("\nPosicao invalida. Digite novamente: ");
+                scanf("%d", &escolhap2);
+           
+                switch (escolhap2) {
+                case 1:
+                    strcpy(em_jogop2, maop2[0]);
+                    break;
+                case 2:                    
+                    strcpy(em_jogop2, maop2[1]);
+                    break;
+                case 3:
+                    strcpy(em_jogop2, maop2[2]);                        
+                    break;
+                case 4:
+                    strcpy(em_jogop2, maop2[3]);
+                    break;
+                case 5:
+                    strcpy(em_jogop2, maop2[4]);
+                    break;
+                case 6:
+                    strcpy(em_jogop2, maop2[5]);
+                    break;
+                case 7: 
+                    strcpy(em_jogop2, maop2[6]);
+                    break;
+
+                }
+            }
         }
 
         if(em_jogop2[2] == 'V'){
@@ -656,7 +765,7 @@ int main() {
         }
         
         printf("\nFim da rodada %d\n", rodadas);
-        printf("Combates vencidos por %s: %d", p1, combatew_p1);
+        printf("Combates vencidos por %s: %d\n", p1, combatew_p1);
         printf("Combates vencidos por %s: %d", p2, combatew_p2);
         printf("\nPressione 1 para continuar: ");
         scanf("%d", &continuar);
@@ -684,5 +793,5 @@ int main() {
     }
 
     return 0;
-
+    
 }
