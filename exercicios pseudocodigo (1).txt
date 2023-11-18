@@ -1,0 +1,396 @@
+1.
+
+int main(){
+
+	int i, cont = 0;
+	float media, total = 0, media_final;
+
+	imprimir("Insira o valor das 50 notas da turma");
+
+	para i de 1 ate 50{
+		ler(media);
+		total += media;
+		cont++;
+	}
+	
+	media_final = total/cont;
+
+	imprimir(media_final);
+
+
+}
+
+2.
+
+int main{
+
+
+	int i, num_par, cont = 0, total = 0, media_final;
+	
+	imprimir("Insira um conjunto de numeros pares, digite 0 para encerrar a leitura");
+	
+	para i de 1 ate num_par = 0{
+		ler(num_par);
+		cont++;
+		total += num_par;
+	}
+
+	media_final = total/cont;
+	imprimir(media_final);
+
+}
+	
+3.
+
+int main{
+
+	int i, n, fatorial = 1;
+	
+	imprimir("Insira um numero para calcular seu fatorial");
+	ler(n);
+
+	para i de 1 ate n-1{
+		fatorial *= i;
+	}
+
+	imprimir(fatorial);
+}
+
+4.
+
+int main{
+
+	int i, n,
+
+	imprimir("Insira um numero inteiro e positivo: ");
+	ler(n);
+
+	para i de 1 ate n{
+		imprimir(i * 2, )
+	}
+	
+}
+
+5.
+
+int main(){
+
+	int i;
+	
+	para i de 0 ate 5{
+		se i == 1{
+			imprimir(/ni);
+		}
+			se i == 2{
+				imprimir(\n\ti);
+			}
+				se i == 3{
+					imprimir(\n\t\ti);
+			}
+	}
+	
+}
+
+6.
+
+int main(){
+
+	int fibo[10] = {0, 1};
+	
+	imprimir("01");
+	
+	para int = i de 2 ate 10{
+		fibo[i] = fibo[i -1] + fibo[i - 2];
+		imprimir(fibo[i]);
+	}
+		
+
+}
+
+7.
+
+int main{
+
+	literal vetor[];
+	int i, cont = 0;
+
+
+	enquanto (1){
+		ler(vetor[i]);
+		cont++;
+			se vetor == '='{
+				break;
+			}
+	}
+
+	cont = cont--;
+	
+	para i de cont ate 0{
+		escrever(vetor[i]);
+	}
+}
+	
+8.
+
+int main{
+	
+	literal vetor[];
+	int i, a = 0, b = 0, c = 0, d = 0, e = 0;
+
+	escrever("Digite uma mensagem. Digite '=' para parar a leitura);
+
+	enquanto(1){
+		i = 0;
+		ler (vetor[i])
+		i++;
+		
+		se (vetor[i] == '='){
+			break;
+		}
+
+		se (vetor[i] == 'a'){
+			a++;
+		}
+		se (vetor[i] == 'b'){
+			b++;
+		}
+		se (vetor[i] == 'c'){
+			c++;
+		}
+		se (vetor[i] == 'd'){
+			d++;
+		}
+		se (vetor[i] == 'e'){
+			e++;
+		}
+
+	}
+
+	escrever("Quantidade de a: ", a, " "quantidade de b: ", b, "quantidade de c: ", c, "quantidade de c: ", c, "quantidade de d: ", d, "quantidade de e: ", e);
+
+}
+	 	
+9.
+
+int main(){
+
+	literal vetor[];
+	int i;
+	
+	enquanto (1){
+
+		i = 0;
+		ler(vetor[i]);
+		i++;
+
+		se vetor[i] == '='{
+			break;
+		}
+		
+		se (vetor[i] == '='){
+			break;
+		}
+
+		se (vetor[i] == 'a'){
+			vetor[i] = 'x';
+		}
+		se (vetor[i] == 'e'){
+			vetor[i] = 'y';
+		}
+		se (vetor[i] == 'i'){
+			vetor[i] = 'w';
+		}
+		se (vetor[i] == 'o'){
+			vetor[i] = 'k';
+		}
+		se (vetor[i] == 'u'){
+			vetor[i] = 'z';
+		}
+
+}
+
+	imprimir(vetor);
+
+}
+
+10.
+
+int main(){
+
+	literal vetor[];
+	int j;
+	
+	enquanto(1){
+
+		int i = 0;
+		ler(vetor[i]);
+		i++;
+
+		se vetor[i] == '='{
+			break.
+		}
+		
+	}
+
+	i = i--;
+
+	para j de i ate 0{
+		escrever(vetor[i]);
+		i--;
+	}
+
+}
+
+
+11. 
+
+int main (){
+
+	literal profissoes[20];
+	int i;
+	char a = 'a';
+
+	para i de 0 ate 19{
+		ler(profissoes[i]);
+		se profissoes[i] != a{
+			imprimir(profissoes[i])
+		}
+	}
+}
+
+12. 
+
+funcao principal(){
+
+	int i;
+	real raiz_quadrada; numeros[15];
+	
+
+	para i de 0 ate 14{
+		ler(numeros[i]);
+		raiz_quadrada = sqrt(numeros[i]);
+		imprimir(raiz_quadrada);
+	}
+}
+
+13.
+
+funcao principal(){
+
+	real metade, numeros[10];
+	int i;
+	
+	para i de 0 ate 9{
+		ler(numeros[i]);
+		metade = numeros[i] / 2;
+		imprimir(metade);
+	}
+}
+
+14.
+
+funcao principal(){
+	
+	int intervalo[], limite_superior, i;
+	
+	ler(limite_superior);
+
+	para i de 1 ate (limite_superior - 1){
+		intervalo[i] = i;
+		se i mod 2 != 0{
+			escrever(i);
+		}
+	}
+}
+
+15.
+
+funcao principal(){
+
+	int intervalo[], i, quan;
+	
+	ler(quan);
+
+	se quan < 2{
+		retorne 0;
+	}
+	
+	para i de 1 ate quan{
+		se i mod 2 == 0{
+			escrever i;
+		}
+	}
+}
+
+16. 
+
+funcao principal(){
+
+	int tabu3[10], tabu4[10], tabu5[10], i;		
+
+	para i de 0 ate 9{
+		imprimir("3 x ", i, " = ", (i * 3);
+
+	...
+	}
+}
+
+17. 
+
+funcao principal(){
+
+	literal matriz[20, 3]
+	int i, j, v = 0, e = 0, d = 0;
+	
+
+	para j de 0 ate 2{
+		para i de 0 ate 19{
+			ler(matriz[j]);
+			se matriz[j] == 'v'{
+				v++;
+			}
+		}
+	}
+			
+	para j de 0 ate 2{
+		para i de 0 ate 19{
+			ler(matriz[j]);
+			se matriz[j] == 'd'{
+				d++;
+			}
+		}
+	}
+
+	se v > e && v > d{
+		escrever("V com ", v);
+	}
+	se e > v && e > d{
+		escrever("E com ", e);
+	}
+	se d > v && d > e{
+		escrever("D com ", d);
+	}
+}
+
+18.
+
+funcao principal(){
+
+	int soma = 0, i;
+
+	para int i de 1 ate 100{
+		soma += i;
+	}
+}
+
+19. 
+
+funcao principal(){
+
+	int numinteiros[10], i;
+
+	para i de 0 ate 9{
+		ler(numinteiros[i]);
+	}
+	
+	se numinteiros
